@@ -28,7 +28,7 @@ class ResBlock(eqx.Module):
 
         self.act = activation
 
-    @jax.jit
+    # @jax.jit
     def __call__(self, x):
         y = x
 
@@ -84,7 +84,7 @@ class Encoder(eqx.Module):
             key=key6,
         )
 
-    @jax.jit
+    # @jax.jit
     def __call__(self, x):
 
         y = self.conv1(x)
@@ -128,7 +128,7 @@ class UpsampledConv(eqx.Module):
             key=key,
         )
 
-    @jax.jit
+    # @jax.jit
     def __call__(self, x):
         upsampled_size = (x.shape[0], x.shape[1] * self.stride)
         upsampled = jax.image.resize(x, upsampled_size, method="nearest")
@@ -185,7 +185,7 @@ class Decoder(eqx.Module):
             key=key7,
         )
 
-    @jax.jit
+    # @jax.jit
     def __call__(self, x):
 
         y = self.conv1(x)
@@ -302,7 +302,7 @@ class VQVAE(eqx.Module):
         self.decoder = Decoder(key=key2)
         self.quantizer = Quantizer(decay=0.8, key=key3)
 
-    @jax.jit
+    # @jax.jit
     def __call__(self, x):
         z_e = self.encoder(x)
         z_q = self.quantizer(z_e)
